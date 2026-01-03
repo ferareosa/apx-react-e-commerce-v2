@@ -4,7 +4,7 @@ import { StoreHeader } from '../components/StoreHeader';
 import { useAuth } from '../context/AuthContext';
 
 export function OrdersPage() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
 
   if (!isAuthenticated) {
