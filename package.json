@@ -8,10 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server:dev": "tsx watch server/src/index.ts",
-    "server:build": "tsc -b tsconfig.server.json",
-    "server:start": "node --enable-source-maps dist/server/index.js",
-    "algolia:seed": "tsx server/scripts/seed-algolia.ts"
+    "start": "node --enable-source-maps dist/server/index.js"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.0.20",
