@@ -1,0 +1,45 @@
+{
+  "name": "ecommerce",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "server:dev": "tsx watch server/src/index.ts",
+    "server:build": "tsc -b tsconfig.server.json",
+    "server:start": "node --enable-source-maps dist/server/index.js",
+    "algolia:seed": "tsx server/scripts/seed-algolia.ts"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-sans": "^5.0.20",
+    "@fontsource/playfair-display": "^5.0.19",
+    "@fontsource/space-grotesk": "^5.0.20",
+    "@mercadopago/sdk-react": "^1.0.7",
+    "@supabase/supabase-js": "^2.46.1",
+    "@tanstack/react-query": "^5.62.7",
+    "algoliasearch": "^5.13.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.474.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "tsx": "^4.19.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.4"
+  }
+}
