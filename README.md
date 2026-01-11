@@ -48,46 +48,35 @@ Si preferís un único comando, podés usar `npm run dev` en una terminal y `npm
 
 Usá `.env.example` como base para `.env`. Las claves principales son:
 
-| Variable             | Descripción                                                      | Valor por defecto                             |
-| -------------------- | ---------------------------------------------------------------- | --------------------------------------------- |
-| `PORT`               | Puerto del frontend (Vite).                                      | `5173`                                        |
-| `SERVER_PORT`        | Puerto del backend Express.                                      | `4000`                                        |
-| `AUTH_SECRET`        | Secreto para firmar JWT.                                         | `super-secret`                                |
-| `LOGIN_CODE_TTL`     | Minutos de vigencia para los códigos enviados por email.         | `10`                                          |
-| `MP_WEBHOOK_SECRET`  | Firma compartida para validar el webhook de Mercado Pago/IPN.    | `dev-signature`                               |
-| `MP_ACCESS_TOKEN`    | Access token privado de Mercado Pago usado por el backend.       | _(sin valor)_                                 |
-| `MP_PUBLIC_KEY`      | Public key de Mercado Pago expuesta en el frontend.              | _(sin valor)_                                 |
-| `VITE_MP_PUBLIC_KEY` | Public key que inicializa el SDK de Mercado Pago en el frontend. | _(sin valor)_                                 |
-| `MP_SUCCESS_URL`     | URL de retorno cuando el pago se aprueba.                        | `http://localhost:5173/thanks?status=success` |
+| Variable                  | Descripción                                                        | Valor por defecto                                                           |
+| ------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| `PORT`                    | Puerto del frontend (Vite).                                        | `5173`                                                                      |
+| `SERVER_PORT`             | Puerto del backend Express.                                        | `4000`                                                                      |
+| `AUTH_SECRET`             | Secreto para firmar JWT.                                           | `super-secret`                                                              |
+| `LOGIN_CODE_TTL`          | Minutos de vigencia para los códigos enviados por email.           | `10`                                                                        |
+| `MP_WEBHOOK_SECRET`       | Firma compartida para validar el webhook de Mercado Pago/IPN.      | `dev-signature`                                                             |
+| `MP_ACCESS_TOKEN`         | Access token privado de Mercado Pago usado por el backend.         | _(sin valor)_                                                               |
+| `MP_PUBLIC_KEY`           | Public key de Mercado Pago expuesta en el frontend.                | _(sin valor)_                                                               |
+| `VITE_MP_PUBLIC_KEY`      | Public key que inicializa el SDK de Mercado Pago en el frontend.   | _(sin valor)_                                                               |
+| `MP_SUCCESS_URL`          | URL de retorno cuando el pago se aprueba.                          | `http://localhost:5173/thanks?status=success`                               |
+| `MP_FAILURE_URL`          | URL de retorno cuando el pago se rechaza.                          | `http://localhost:5173/thanks?status=failure`                               |
+| `MP_PENDING_URL`          | URL de retorno cuando el pago queda pendiente.                     | `http://localhost:5173/thanks?status=pending`                               |
+| `MP_NOTIFICATION_URL`     | Endpoint público que recibe notificaciones IPN de Mercado Pago.    | `https://apx-react-e-commerce-v2-back.onrender.com/api/webhook/mercadopago` |
+| `VITE_API_URL`            | URL base que consume el frontend de React.                         | `https://apx-react-e-commerce-v2-back.onrender.com`                         |
+| `ALGOLIA_APP_ID`          | Identificador de tu aplicación en Algolia.                         | _(sin valor)_                                                               |
+| `ALGOLIA_API_KEY`         | API key con permisos de escritura (se usa para indexar).           | _(sin valor)_                                                               |
+| `ALGOLIA_INDEX_NAME`      | Nombre del índice donde se publican los productos.                 | _(sin valor)_                                                               |
+| `VITE_ALGOLIA_APP_ID`     | App ID expuesto en el frontend para habilitar la búsqueda directa. | _(sin valor)_                                                               |
+| `VITE_ALGOLIA_INDEX_NAME` | Índice que consulta la barra de búsqueda.                          | _(sin valor)_                                                               |
+| `VITE_ALGOLIA_SEARCH_KEY` | Search-only API key que el frontend puede exponer sin riesgos.     | _(sin valor)_                                                               |
 
 ## Deploy en Vercel
 
 1. Crear un proyecto nuevo en Vercel apuntando a este repositorio y seleccionar la carpeta `client` como raíz.
-2. En la sección **Environment Variables** agregar las claves necesarias (mismas que en `.env`). Al menos:
-
-- `VITE_API_URL`
-- `VITE_SUPABASE_URL`
-- `VITE_SUPABASE_ANON_KEY`
-- `VITE_MP_PUBLIC_KEY`
-- `MP_ACCESS_TOKEN`
-- `MP_PUBLIC_KEY`
-- `MP_SUCCESS_URL`
-- `MP_FAILURE_URL`
-- `MP_PENDING_URL`
-
+2. En la sección **Environment Variables** agregar las claves necesarias (mismas que en `.env`). Al menos `VITE_API_URL`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_MP_PUBLIC_KEY`, `MP_ACCESS_TOKEN`, `MP_PUBLIC_KEY`, `MP_SUCCESS_URL`, `MP_FAILURE_URL` y `MP_PENDING_URL`.
 3. Guardar y desplegar. El build utiliza `npm run build` y publica en `dist`.
 4. Las rutas del router están resueltas con un rewrite (`vercel.json`), así que `/signin`, `/profile`, `/search`, etc. funcionan con deep links.
 5. Tras el primer deploy validar callbacks de Mercado Pago apuntando al dominio público final.
-   | `MP_FAILURE_URL` | URL de retorno cuando el pago se rechaza. | `http://localhost:5173/thanks?status=failure` |
-   | `MP_PENDING_URL` | URL de retorno cuando el pago queda pendiente. | `http://localhost:5173/thanks?status=pending` |
-   | `MP_NOTIFICATION_URL` | Endpoint público que recibe notificaciones IPN de Mercado Pago. | `http://localhost:4000/api/webhook/mercadopago` |
-   | `VITE_API_URL` | URL base que consume el frontend de React. | `http://localhost:4000` |
-   | `ALGOLIA_APP_ID` | Identificador de tu aplicación en Algolia. | _(sin valor)_ |
-   | `ALGOLIA_API_KEY` | API key con permisos de escritura (se usa para indexar). | _(sin valor)_ |
-   | `ALGOLIA_INDEX_NAME` | Nombre del índice donde se publican los productos. | _(sin valor)_ |
-   | `VITE_ALGOLIA_APP_ID` | App ID expuesto en el frontend para habilitar la búsqueda directa. | _(sin valor)_ |
-   | `VITE_ALGOLIA_INDEX_NAME` | Índice que consulta la barra de búsqueda. | _(sin valor)_ |
-   | `VITE_ALGOLIA_SEARCH_KEY` | Search-only API key que el frontend puede exponer sin riesgos. | _(sin valor)_ |
 
 Postman utiliza las mismas variables con prefijo `POSTMAN_` en `.env.postman` para sincronizar el runner.
 
@@ -126,8 +115,6 @@ Todas las rutas viven en `server/src/routes` y comparten middlewares de `server/
 
 ### MercadoPago e IPN
 
-- `POST /order` crea la orden en memoria, reserva stock y devuelve `paymentUrl`.
-- `POST /ipn/mercadopago` espera `orderId`, `status`, `paymentId` y una firma (`X-Signature`).
 - El servicio valida la firma, actualiza el estado (`pending-payment`, `paid`, `failed`), libera stock cuando corresponde, envía emails y registra una notificación interna.
 
 ## Estructura relevante
@@ -151,9 +138,6 @@ server/
 
 El dashboard vive íntegramente dentro de `client/` y usa React + Vite apuntando al backend Express. Algunas notas:
 
-- **Storefront de indumentaria**: el header y el hero simulan una casa de moda (Casa Boulevard) con CTA hacia catálogo, club y pedidos.
-- **Autenticación sin contraseña**: en la columna izquierda podés pedir código, actualizar perfil y dirección.
-- **Catálogo editorial**: el grid central consume `/search`, aplica chips de categorías y mapea cada producto a una toma fotográfica para lograr un lookbook clásico.
 - **Historial de compras**: la sección final refresca `/me/orders` cada 15 segundos, muestra los estados y expone el link de pago para retomar el checkout.
 
 Para correrlo:
@@ -163,7 +147,7 @@ Para correrlo:
 npm run server:dev
 
 # en otra
-VITE_API_URL=http://localhost:4000 npm run dev
+VITE_API_URL=https://apx-react-e-commerce-v2-back.onrender.com npm run dev
 ```
 
 `VITE_API_URL` puede omitirse si ya lo definiste en un archivo `.env` en la raíz.

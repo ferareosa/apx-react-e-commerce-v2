@@ -8,7 +8,7 @@ import type {
   User
 } from '../types';
 
-const API_BASE = (import.meta.env.VITE_API_URL ?? 'http://localhost:4000').replace(/\/$/, '');
+const API_BASE = (import.meta.env.VITE_API_URL ?? 'https://apx-react-e-commerce-v2-back.onrender.com').replace(/\/$/, '');
 
 export class ApiError extends Error {
   status: number;
