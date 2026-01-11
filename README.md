@@ -1,18 +1,22 @@
 # Ecommerce Platform
 
-Aplicación full-stack pensada para ensayar un flujo completo de ecommerce: autenticación passwordless, búsqueda de productos, generación de órdenes y confirmación de pagos vía Mercado Pago. El frontend usa React + Vite y el backend es Express + TypeScript con una base en memoria sencilla de extender.
+**Versión de prueba:** https://apx-react-e-commerce-v2.vercel.app/
+
+**Backend:** https://github.com/ferareosa/apx-react-e-commerce-v2-back
+
+Aplicación full-stack orientada a demostrar un flujo de ecommerce de punta a punta: autenticación passwordless, catálogo con búsqueda editorial, generación de órdenes y conciliación de pagos con Mercado Pago. El frontend está construido con React + Vite y consume un backend Express escrito en TypeScript que persiste en memoria para facilitar la iteración.
 
 ## Colección de Postman
 
 La colección con todos los endpoints y tests está disponible en el [workspace público](https://fer-areosa-9609763.postman.co/workspace/Fernando-Areosa's-Workspace~7dbf83cf-259d-4c22-848d-f09ff7b65052/collection/50834108-fd40475c-f102-4876-88c7-a5aba2682334?action=share&source=copy-link&creator=50834108).
 
-## Características
+## Características destacadas
 
-- Login passwordless con códigos temporales y un código maestro configurable para entornos de prueba.
-- Catálogo semilla y motor de búsqueda que replica el flujo Airtable ➜ Algolia o usa un índice real cuando configurás credenciales.
-- Checkout que reserva stock, genera una preferencia de pago y almacena el historial de la orden.
-- Webhook de Mercado Pago con validación de firma para simular el ciclo de pago completo.
-- Colección de Postman con assertions listas para automatizar la verificación del backend.
+- Login passwordless con códigos temporales y código maestro de respaldo para demos.
+- Catálogo semilla y buscador que imita el flujo Airtable ➜ Algolia, con opción de conectar un índice real.
+- Checkout que reserva stock, genera preferencia de pago y traza el historial de cada orden.
+- Webhook de Mercado Pago con validación de firma para cerrar el circuito de pago end-to-end.
+- Colección de Postman con tests para revisar la API en segundos.
 
 ## Requisitos previos
 
