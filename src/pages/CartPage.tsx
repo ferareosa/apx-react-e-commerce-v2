@@ -39,7 +39,7 @@ export function CartPage() {
   }, [items]);
 
   if (!token) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
   const checkoutMutation = useMutation({
@@ -91,7 +91,7 @@ export function CartPage() {
 
     if (!hasShippingData) {
       setFeedback('Necesitamos tus datos de envío antes de continuar. Completalos en tu perfil.');
-      navigate('/account', { state: { from: location.pathname, reason: 'missing-shipping' } });
+      navigate('/profile', { state: { from: location.pathname, reason: 'missing-shipping' } });
       return;
     }
 

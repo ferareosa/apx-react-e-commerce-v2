@@ -40,19 +40,27 @@ const providerStatusBuckets: Record<string, StatusBucket> = {
   refunded: 'failure'
 };
 
-function getStatusFromPath(pathname: string): StatusBucket {
-  const [, , status] = pathname.split('/');
-  if (status === 'success') {
-    return 'success';
-  }
-  if (status === 'failure') {
-    return 'failure';
-  }
-  return 'pending';
-}
-
 function normaliseParam(value: string | null) {
   return value ? value.toLowerCase() : undefined;
+}
+
+function getBaseStatus(pathname: string, params: URLSearchParams): StatusBucket {
+  const explicitStatus = normaliseParam(params.get('status'));
+  if (explicitStatus === 'success' || explicitStatus === 'failure' || explicitStatus === 'pending') {
+    return explicitStatus;
+  }
+
+  if (pathname.includes('/checkout/success')) {
+    return 'success';
+  }
+  if (pathname.includes('/checkout/failure')) {
+    return 'failure';
+  }
+  if (pathname.includes('/checkout/pending')) {
+    return 'pending';
+  }
+
+  return 'pending';
 }
 
 function humanizeStatus(value?: string) {
@@ -76,7 +84,7 @@ export function CheckoutStatusPage() {
   const [searchParams] = useSearchParams();
   const { token } = useAuth();
 
-  const baseStatus = getStatusFromPath(location.pathname);
+  const baseStatus = getBaseStatus(location.pathname, searchParams);
   const providerStatus = normaliseParam(
     searchParams.get('collection_status') ??
       searchParams.get('status') ??
@@ -168,7 +176,7 @@ export function CheckoutStatusPage() {
         )}
 
         <div className="checkout-status__actions">
-          <Link className="cta" to="/pedidos">
+          <Link className="cta" to="/profile/orders">
             Ver mis pedidos
           </Link>
           <Link className="ghost" to="/">

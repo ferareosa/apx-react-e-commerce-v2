@@ -4,29 +4,24 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 export function StoreHeader() {
-  const { user, logout, isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const isLoginPage = location.pathname === '/login';
-  const ordersPath = '/pedidos';
-  const isOrdersPage = location.pathname === '/orders' || location.pathname === ordersPath;
-  const isAccountPage = location.pathname === '/account';
+  const signinPath = '/signin';
+  const ordersPath = '/profile/orders';
+  const isSigninPage = location.pathname === signinPath;
+  const isOrdersPage = location.pathname === ordersPath;
+  const isProfilePage = location.pathname === '/profile';
   const isCartPage = location.pathname === '/cart';
   const { totalItems } = useCart();
 
   const hasSession = isAuthenticated;
   const ordersLinkState = hasSession ? undefined : { from: { pathname: ordersPath } };
-  const ordersDestination = hasSession ? ordersPath : '/login';
-  const isOrdersEntryActive = hasSession ? isOrdersPage : isLoginPage;
+  const ordersDestination = hasSession ? ordersPath : signinPath;
+  const isOrdersEntryActive = hasSession ? isOrdersPage : isSigninPage;
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('No pudimos cerrar tu sesión en Supabase.', error);
-    } finally {
-      navigate('/', { replace: true });
-    }
+  const handleLogout = () => {
+    navigate('/logout');
   };
 
   return (
@@ -41,9 +36,9 @@ export function StoreHeader() {
           <>
             <Link
               className="header-pill"
-              to="/account"
-              aria-current={isAccountPage ? 'page' : undefined}
-              data-active={isAccountPage ? 'true' : undefined}
+              to="/profile"
+              aria-current={isProfilePage ? 'page' : undefined}
+              data-active={isProfilePage ? 'true' : undefined}
             >
               <User size={16} /> Mis datos
             </Link>
@@ -54,9 +49,9 @@ export function StoreHeader() {
         ) : (
           <Link
             className="header-pill"
-            to="/login"
-            aria-current={isLoginPage ? 'page' : undefined}
-            data-active={isLoginPage ? 'true' : undefined}
+            to={signinPath}
+            aria-current={isSigninPage ? 'page' : undefined}
+            data-active={isSigninPage ? 'true' : undefined}
           >
             <User size={16} /> Ingresar
           </Link>

@@ -105,7 +105,7 @@ export function AccountPage() {
   }, [applyMetadata]);
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
   const handleProfileSubmit = async (event: FormEvent<HTMLFormElement>) => {

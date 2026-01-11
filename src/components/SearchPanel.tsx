@@ -22,16 +22,27 @@ const ALGOLIA_INDEX = getAlgoliaIndexName();
 
 type SearchPanelProps = {
   onProductsChange?: (items: Product[]) => void;
+  initialQuery?: string;
+  onQueryChange?: (value: string) => void;
 };
 
 export function SearchPanel(props: SearchPanelProps = {}) {
-  const { onProductsChange } = props;
-  const [query, setQuery] = useState('');
+  const { onProductsChange, initialQuery = '', onQueryChange } = props;
+  const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState('Todo');
   const categories = ['Todo', 'Sastrería', 'Denim', 'Edición limitada', 'Weekend'];
   const effectiveQuery = category === 'Todo' ? query : `${query} ${category.toLowerCase()}`;
   const debounced = useDebounce(effectiveQuery, 350);
   const searchMode: 'algolia' | 'api' = ALGOLIA_ENABLED ? 'algolia' : 'api';
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
+
+  const handleQueryChange = (nextValue: string) => {
+    setQuery(nextValue);
+    onQueryChange?.(nextValue);
+  };
 
   const searchEnabled = true;
 
@@ -99,7 +110,7 @@ export function SearchPanel(props: SearchPanelProps = {}) {
             type="search"
             placeholder="vestidos linos, blazer crudo, denim..."
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => handleQueryChange(event.target.value)}
           />
           <span>{searchResult.isFetching ? 'Buscando…' : searchMode === 'algolia' ? 'Algolia live' : 'Editorial lista'}</span>
         </div>

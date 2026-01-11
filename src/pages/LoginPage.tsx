@@ -25,7 +25,7 @@ export function LoginPage() {
 
   const redirectTarget = useMemo(() => {
     const from = (location.state as RouterState | undefined)?.from;
-    if (!from) return '/pedidos';
+    if (!from) return '/profile/orders';
     return `${from.pathname}${from.search ?? ''}${from.hash ?? ''}`;
   }, [location.state]);
 

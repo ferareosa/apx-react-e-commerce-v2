@@ -72,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     async (email: string) => {
       await registerAuthWorker();
       const normalizedEmail = email.trim().toLowerCase();
-      const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/login` : null;
+      const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/signin` : null;
       const options: { shouldCreateUser: boolean; emailRedirectTo?: string } = {
         shouldCreateUser: true
       };
